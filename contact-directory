@@ -1,0 +1,64 @@
+qn=1
+print('.......................................................Contact_book_version_1.3............................................................')
+cb_read=open("con_storage","r+")
+cb_app=open("con_storage",'a+')
+def space_b():
+    for i in range(1,4):
+        print('|')
+while qn>0:
+    space_b()
+    opi=input('..............Please Select Operations..................\n\n\n\n********      1-Read Contact Book   ********\n\n********      2-Add Contacts        ********\n\n********      3-Find By Name        ********\n\n********      4-Delete Contact      ********\n\n********      5-Exit Programme      ********\n\n')
+    if len(opi)<1:
+        print('Please Enter Valid Input')
+        continue
+    try:opi=int(opi)
+    except:
+        print('Please Enter Valid Input')
+        continue
+    space_b()
+    if opi==1:
+        cb_read.seek(0)
+        print(cb_read.read())
+        continue
+    elif opi==2:
+        name=input('                    ****Enter Name****\n\n')
+        email=input('                   ****Enter E-mail Adress****\n\n')
+        phn=input('                     ****Enter Phone Number****\n\n')
+        add=input('                     ****Enter Adress****\n\n')
+        entry=(name+'----------'+email+'----------'+phn+'----------'+add+'\n')
+        entry=str(entry)
+        cb_app.write(entry)
+        space_b()
+        print('Your Contact Has Been Added')
+    elif opi==3:
+        try:
+            gname=input('**Enter Name**\n\n')
+            for guy in cb_read:
+                if guy.startswith(gname):
+                    print(guy)
+        except:
+            print('There Is No Contact By This Name Please Correct Input And Try Again')
+            continue
+    elif opi==4:
+        try:
+            y=input('Please Enter The Name Of Contact To Be Deleted\n')
+            x=0
+            a_file = open("con_storage", "r")
+            for lines in a_file:
+                x=x+1
+                if y in lines:
+                    z=x
+            a_file.close()
+            a_file = open("con_storage", "r")
+            lines = a_file.readlines()
+            del lines[z-1]
+            new_file = open("con_storage", "w+")
+            for line in lines:
+                new_file.write(line)
+            print('Contact Deleted')
+        except:
+            print('There Is No Contact By This Name Please Correct Input And Try Again')
+            continue
+    else:
+        print('Thanks For Using')
+        break
